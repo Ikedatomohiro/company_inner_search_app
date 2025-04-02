@@ -165,5 +165,8 @@ cython_debug/
 .chroma/
 logs/
 
+# data
+data/
+
 # 仮想環境
-inner_search
+inner_search/
