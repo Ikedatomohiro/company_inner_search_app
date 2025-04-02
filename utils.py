@@ -42,7 +42,7 @@ def get_source_icon(source):
         icon = ct.LINK_SOURCE_ICON
     else:
         icon = ct.DOC_SOURCE_ICON
-    
+
     return icon
 
 

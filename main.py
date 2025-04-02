@@ -118,7 +118,7 @@ if chat_message:
             st.error(utils.build_error_message(ct.GET_LLM_RESPONSE_ERROR_MESSAGE), icon=ct.ERROR_ICON)
             # 後続の処理を中断
             st.stop()
-    
+
     # ==========================================
     # 7-3. LLMからの回答表示
     # ==========================================
@@ -137,7 +137,7 @@ if chat_message:
             elif st.session_state.mode == ct.ANSWER_MODE_2:
                 # 入力に対しての回答と、参照した文書のありかを表示
                 content = cn.display_contact_llm_response(llm_response)
-            
+
             # AIメッセージのログ出力
             logger.info({"message": content, "application_mode": st.session_state.mode})
         except Exception as e:

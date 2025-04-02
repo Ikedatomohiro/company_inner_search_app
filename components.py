@@ -30,7 +30,7 @@ def display_select_mode():
     with col1:
         # 「label_visibility="collapsed"」とすることで、ラジオボタンを非表示にする
         st.session_state.mode = st.radio(
-            label="",
+            label="aaaa",
             options=[ct.ANSWER_MODE_1, ct.ANSWER_MODE_2],
             label_visibility="collapsed"
         )
@@ -70,12 +70,12 @@ def display_conversation_log():
             # ユーザー入力値の場合、そのままテキストを表示するだけ
             if message["role"] == "user":
                 st.markdown(message["content"])
-            
+
             # LLMからの回答の場合
             else:
                 # 「社内文書検索」の場合、テキストの種類に応じて表示形式を分岐処理
                 if message["content"]["mode"] == ct.ANSWER_MODE_1:
-                    
+
                     # ファイルのありかの情報が取得できた場合（通常時）の表示処理
                     if not "no_file_path_flg" in message["content"]:
                         # ==========================================
@@ -91,7 +91,7 @@ def display_conversation_log():
                             st.success(f"{message['content']['main_file_path']}", icon=icon)
                         else:
                             st.success(f"{message['content']['main_file_path']}", icon=icon)
-                        
+
                         # ==========================================
                         # ユーザー入力値と関連性が高いサブドキュメントのありかを表示
                         # ==========================================
@@ -111,7 +111,7 @@ def display_conversation_log():
                     # ファイルのありかの情報が取得できなかった場合、LLMからの回答のみ表示
                     else:
                         st.markdown(message["content"]["answer"])
-                
+
                 # 「社内問い合わせ」の場合の表示処理
                 else:
                     # LLMからの回答を表示
@@ -152,7 +152,7 @@ def display_search_llm_response(llm_response):
         # 補足メッセージの表示
         main_message = "入力内容に関する情報は、以下のファイルに含まれている可能性があります。"
         st.markdown(main_message)
-        
+
         # 参照元のありかに応じて、適したアイコンを取得
         icon = utils.get_source_icon(main_file_path)
         # ページ番号が取得できた場合のみ、ページ番号を表示（ドキュメントによっては取得できない場合がある）
@@ -182,14 +182,14 @@ def display_search_llm_response(llm_response):
             # メインドキュメントのファイルパスと重複している場合、処理をスキップ（表示しない）
             if sub_file_path == main_file_path:
                 continue
-            
+
             # 同じファイル内の異なる箇所を参照した場合、2件目以降のファイルパスに重複が発生する可能性があるため、重複を除去
             if sub_file_path in duplicate_check_list:
                 continue
 
             # 重複チェック用のリストにファイルパスを順次追加
             duplicate_check_list.append(sub_file_path)
-            
+
             # ページ番号が取得できない場合のための分岐処理
             if "page" in document.metadata:
                 # ページ番号を取得
@@ -199,10 +199,10 @@ def display_search_llm_response(llm_response):
             else:
                 # 「サブドキュメントのファイルパス」の辞書を作成
                 sub_choice = {"source": sub_file_path}
-            
+
             # 後ほど一覧表示するため、サブドキュメントに関する情報を順次リストに追加
             sub_choices.append(sub_choice)
-        
+
         # サブドキュメントが存在する場合のみの処理
         if sub_choices:
             # 補足メッセージの表示
@@ -220,7 +220,7 @@ def display_search_llm_response(llm_response):
                 else:
                     # 「サブドキュメントのファイルパス」を表示
                     st.info(f"{sub_choice['source']}", icon=icon)
-        
+
         # 表示用の会話ログに格納するためのデータを用意
         # - 「mode」: モード（「社内文書検索」or「社内問い合わせ」）
         # - 「main_message」: メインドキュメントの補足メッセージ
@@ -239,7 +239,7 @@ def display_search_llm_response(llm_response):
         if sub_choices:
             content["sub_message"] = sub_message
             content["sub_choices"] = sub_choices
-    
+
     # LLMからのレスポンスに、ユーザー入力値と関連性の高いドキュメント情報が入って「いない」場合
     else:
         # 関連ドキュメントが取得できなかった場合のメッセージ表示
@@ -253,7 +253,7 @@ def display_search_llm_response(llm_response):
         content["mode"] = ct.ANSWER_MODE_1
         content["answer"] = ct.NO_DOC_MATCH_MESSAGE
         content["no_file_path_flg"] = True
-    
+
     return content
 
 
