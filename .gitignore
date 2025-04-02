@@ -167,6 +167,7 @@ logs/
 
 # data
 data/
+.streamlit/data/
 
 # 仮想環境
 inner_search/
